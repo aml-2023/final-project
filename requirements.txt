@@ -3,3 +3,9 @@ pandas
 jupyter
 matplotlib
 torch
+transformers
+pytorch-lightning
+pycocotools
+tensorboard
+scipy
+coco-eval
