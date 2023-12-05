@@ -47,7 +47,7 @@ curl -L "$url" > roboflow.zip
 mkdir -p "$output_folder"
 
 # Extract the content of roboflow.zip
-unzip -d "$output_folder" roboflow.zip
+unzip -d "$output_folder" -qq roboflow.zip
 
 # Remove the downloaded zip file
 rm roboflow.zip
