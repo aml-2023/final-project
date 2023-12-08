@@ -1,0 +1,250 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyM8zCLObXocQANy6qcvDGAo",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/aml-2023/final-project/blob/yolo/yolo_ultralytics\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Install\n",
+        "We will install the `ultralytics` pip package which lets us easily fine tune YOLO models.\n",
+        "\n",
+        "https://github.com/ultralytics/ultralytics"
+      ],
+      "metadata": {
+        "id": "X9MS1ol8uecQ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "NNd8E3Ykl2zq",
+        "outputId": "9055e2db-d09e-4ea4-b4ef-157ad504115d"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[?25l     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m0.0/660.1 kB\u001b[0m \u001b[31m?\u001b[0m eta \u001b[36m-:--:--\u001b[0m\r\u001b[2K     \u001b[91m━━━━━━\u001b[0m\u001b[91m╸\u001b[0m\u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m112.6/660.1 kB\u001b[0m \u001b[31m3.1 MB/s\u001b[0m eta \u001b[36m0:00:01\u001b[0m\r\u001b[2K     \u001b[91m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m\u001b[91m╸\u001b[0m \u001b[32m655.4/660.1 kB\u001b[0m \u001b[31m10.4 MB/s\u001b[0m eta \u001b[36m0:00:01\u001b[0m\r\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m660.1/660.1 kB\u001b[0m \u001b[31m9.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install ultralytics -qq"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Fetch Data\n",
+        "Run the `fetch_data` to get the garbage data in the yolo format."
+      ],
+      "metadata": {
+        "id": "YkEzzjnjuw04"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!wget -O fetch_data.sh https://raw.githubusercontent.com/aml-2023/final-project/main/fetch_data.sh\n",
+        "!bash fetch_data.sh --type yolo --output garbage"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "CrgvRC6Ymhp9",
+        "outputId": "541c433b-e2ad-4f5e-d98d-b85064993911"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "--2023-12-08 08:32:20--  https://raw.githubusercontent.com/aml-2023/final-project/main/fetch_data.sh\n",
+            "Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...\n",
+            "Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.\n",
+            "HTTP request sent, awaiting response... 200 OK\n",
+            "Length: 1222 (1.2K) [text/plain]\n",
+            "Saving to: ‘fetch_data.sh’\n",
+            "\n",
+            "fetch_data.sh       100%[===================>]   1.19K  --.-KB/s    in 0s      \n",
+            "\n",
+            "2023-12-08 08:32:20 (8.22 MB/s) - ‘fetch_data.sh’ saved [1222/1222]\n",
+            "\n",
+            "Downloading data\n",
+            "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n",
+            "                                 Dload  Upload   Total   Spent    Left  Speed\n",
+            "100   894  100   894    0     0   1095      0 --:--:-- --:--:-- --:--:--  1095\n",
+            "100  274M  100  274M    0     0  96.6M      0  0:00:02  0:00:02 --:--:--  170M\n",
+            "Data downloaded and extracted into garbage\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Create data subset\n",
+        "We don't want to train on the entire dataset because it takes too long, so let's just look at a subset. The functions below copy over p% of files into a new directory."
+      ],
+      "metadata": {
+        "id": "Vo08h1Qcu5M3"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "import shutil\n",
+        "from glob import glob\n",
+        "import numpy as np\n",
+        "import pathlib\n",
+        "\n",
+        "def label_path_from_image_path(image_path: str, base_path):\n",
+        "    \"\"\"Gets the YOLO label path from the image path.\"\"\"\n",
+        "    label = image_path.split(\"/\")[-1]\n",
+        "    label = label[:-3] + \"txt\"\n",
+        "    label = os.path.join(base_path, label)\n",
+        "    return label\n",
+        "\n",
+        "\n",
+        "def get_image_label_path_pair(base_path: str, split_folder: str):\n",
+        "    \"\"\"Gets all the image and label path pairs for a specific base path and the split folder, e.g. garbage and test.\"\"\"\n",
+        "    img_path = os.path.join(base_path, split_folder, \"images\")\n",
+        "    labels_path = os.path.join(base_path, split_folder, \"labels\")\n",
+        "\n",
+        "    pairs = []\n",
+        "    for image_name in glob(f\"{img_path}/*.jpg\"):\n",
+        "        label = label_path_from_image_path(image_name, labels_path)\n",
+        "        pairs.append((image_name, label))\n",
+        "\n",
+        "    return pairs\n",
+        "\n",
+        "\n",
+        "def subset_split_folder(yolo_root_dir: str, percentage: float, split_folder: str, out_dir: str):\n",
+        "    \"\"\"Subsets a split folder (train, test, valid) and copies the subset to a new directory.\"\"\"\n",
+        "    pairs = get_image_label_path_pair(yolo_root_dir, split_folder)\n",
+        "    subset_len = int(len(pairs) * percentage)\n",
+        "    subset_idx = np.random.randint(low=0, high=len(pairs), size=subset_len)\n",
+        "\n",
+        "    subset_pairs = [pairs[i] for i in subset_idx]\n",
+        "\n",
+        "    out_dir_img = os.path.join(out_dir, split_folder, \"images\")\n",
+        "    out_dir_labels = os.path.join(out_dir, split_folder, \"labels\")\n",
+        "\n",
+        "    pathlib.Path(out_dir_img).mkdir(parents=True, exist_ok=True)\n",
+        "    pathlib.Path(out_dir_labels).mkdir(parents=True, exist_ok=True)\n",
+        "\n",
+        "    for img, label in subset_pairs:\n",
+        "        dest_img_path = os.path.join(out_dir_img, img.split(\"/\")[-1])\n",
+        "        dest_label_path = os.path.join(out_dir_labels, label.split(\"/\")[-1])\n",
+        "\n",
+        "        shutil.copy(img, dest_img_path)\n",
+        "        shutil.copy(label, dest_label_path)\n",
+        "\n",
+        "def subset_yolo_data(yolo_root_dir: str, percentage: float, out_dir: str):\n",
+        "    \"\"\"Subsets the YOLO dataset by taking a percentage of the original data and moving it into a new directory.\n",
+        "\n",
+        "    :arg\n",
+        "        yolo_root_dir (str): the root directory where the yolo data is.\n",
+        "        percentage (float): the percentage of images to keep.\n",
+        "        out_dir (str): the output directory, will be created if it does not exist.\n",
+        "    \"\"\"\n",
+        "    subset_split_folder(yolo_root_dir, percentage, \"train\", out_dir)\n",
+        "    subset_split_folder(yolo_root_dir, percentage, \"test\", out_dir)\n",
+        "    subset_split_folder(yolo_root_dir, percentage, \"valid\", out_dir)\n",
+        "\n",
+        "    other_files = [\"README.dataset.txt\", \"README.roboflow.txt\", \"data.yaml\"]\n",
+        "\n",
+        "    for file in other_files:\n",
+        "        old_path = os.path.join(yolo_root_dir, file)\n",
+        "        new_path = os.path.join(out_dir, file)\n",
+        "        shutil.copy(old_path, new_path)\n"
+      ],
+      "metadata": {
+        "id": "yVHnwtJKjMDQ"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Let's only use 10 percent of the data"
+      ],
+      "metadata": {
+        "id": "ZIoGsrRYvIdJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "subset_yolo_data(\"garbage\", 0.1, \"garbage_sub\")"
+      ],
+      "metadata": {
+        "id": "C-qhlbP5lGO0"
+      },
+      "execution_count": 4,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Training the Model\n",
+        "Let's train the model! We just need to import the `YOLO` class from the `ultralytics` package, tell it which version we are using (we go for the nano model because it is fastest to train), and then train it for a number of epochs."
+      ],
+      "metadata": {
+        "id": "jJhfwOgFvK-S"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from ultralytics import YOLO\n",
+        "\n",
+        "# Load a model\n",
+        "model = YOLO(\"yolov8n.pt\")  # load a pretrained model (recommended for training)\n",
+        "\n",
+        "# Use the model\n",
+        "model.train(data=\"/content/garbage_sub/data.yaml\", epochs=25)  # train the model\n",
+        "metrics = model.val()  # evaluate model performance on the validation set"
+      ],
+      "metadata": {
+        "id": "8JjXbewslRqP"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
