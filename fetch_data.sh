@@ -3,6 +3,19 @@
 # Default values
 dataset_type="coco"
 output_folder="data"
+dataset_percentage="full"
+
+# Function to display script usage
+function display_help {
+    echo "Usage: $0 [OPTIONS]"
+    echo "Options:"
+    echo "  -t, --type TYPE         Specify dataset type ('coco' or 'yolo', default: 'coco')"
+    echo "  -o, --output FOLDER     Specify output folder (default: 'data')"
+    echo "  -p, --percentage PERC   Specify dataset percentage ('full' or 'subset', default: 'full')"
+    echo "  -h, --help              Display this help message"
+    exit 0
+}
+
 
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
@@ -19,6 +32,14 @@ while [[ $# -gt 0 ]]; do
             shift
             shift
             ;;
+        -p|--percentage)
+            dataset_percentage="$3"
+            shift
+            shift
+            ;;
+        -h|--help)
+            display_help
+            ;;
         *)
             echo "Unknown option: $1"
             exit 1
@@ -34,9 +55,17 @@ fi
 
 # Define URLs based on the dataset type
 if [ "$dataset_type" == "coco" ]; then
-    url="https://universe.roboflow.com/ds/vunUxYLq9j?key=jDCfG8KbT0"
+  if [ "$dataset_percentage" == "full" ]; then
+      url="https://universe.roboflow.com/ds/vunUxYLq9j?key=jDCfG8KbT0"
+  elif [ "$dataset_percentage" == "subset" ]; then
+      url=""
+  fi
 elif [ "$dataset_type" == "yolo" ]; then
-    url="https://universe.roboflow.com/ds/UoC75yslyT?key=V3X5ZOBCmH"
+  if [ "$dataset_percentage" == "full" ]; then
+      url="https://universe.roboflow.com/ds/UoC75yslyT?key=V3X5ZOBCmH"
+  elif [ "$dataset_percentage" == "subset" ]; then
+      url="https://aml-2023.s3.eu-north-1.amazonaws.com/final-project/garbage_sub_yolo_10_percent.zip"
+  fi
 fi
 
 echo "Downloading data"
