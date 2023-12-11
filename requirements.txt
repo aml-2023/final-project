@@ -3,3 +3,8 @@ pandas
 jupyter
 matplotlib
 torch
+torchvision
+requests
+ultralytics
+opencv-python
+ttach
