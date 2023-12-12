@@ -33,7 +33,7 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         -p|--percentage)
-            dataset_percentage="$3"
+            dataset_percentage="$2"
             shift
             shift
             ;;
@@ -56,19 +56,21 @@ fi
 # Define URLs based on the dataset type
 if [ "$dataset_type" == "coco" ]; then
   if [ "$dataset_percentage" == "full" ]; then
-      url="https://universe.roboflow.com/ds/vunUxYLq9j?key=jDCfG8KbT0"
+    url="https://universe.roboflow.com/ds/vunUxYLq9j?key=jDCfG8KbT0"
   elif [ "$dataset_percentage" == "subset" ]; then
-      url=""
+    url=""
   fi
 elif [ "$dataset_type" == "yolo" ]; then
+  echo "yolo dataset"
   if [ "$dataset_percentage" == "full" ]; then
-      url="https://universe.roboflow.com/ds/UoC75yslyT?key=V3X5ZOBCmH"
+    url="https://universe.roboflow.com/ds/UoC75yslyT?key=V3X5ZOBCmH"
   elif [ "$dataset_percentage" == "subset" ]; then
-      url="https://aml-2023.s3.eu-north-1.amazonaws.com/final-project/garbage_sub_yolo_10_percent.zip"
+    echo "Subset dataset"
+    url="https://aml-2023.s3.eu-north-1.amazonaws.com/final-project/yolo_garbage_subset_10_percent.zip"
   fi
 fi
 
-echo "Downloading data"
+echo "Downloading $dataset_percentage $dataset_type data from $url"
 # Download the 2data2 using curl, save it to roboflow.zip
 curl -L "$url" > roboflow.zip
 
