@@ -8,3 +8,9 @@ requests
 ultralytics
 opencv-python
 ttach
+transformers
+pytorch-lightning
+pycocotools
+tensorboard
+scipy
+coco-eval
