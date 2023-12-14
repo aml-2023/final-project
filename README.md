@@ -29,3 +29,35 @@ The final folder will have the following structure:
 |   |-- test
 |   |-- val
 ```
+
+# Demo
+To run the demo, you can use the `demo.py` script. The script will load a video file and YOLO model
+and to live tracking of the garbage on the video.
+
+```
+python demo.py --help
+
+usage: demo.py [-h] -v VIDEO -m MODEL -c CONFIG
+
+Do Object Detection in a Video for Garbage using YOLO.
+
+options:
+  -h, --help            show this help message and exit
+  -v VIDEO, --video VIDEO
+                        Path to the video file
+  -m MODEL, --model MODEL
+                        Path to the model checkpoint file (model.pt)
+  -c CONFIG, --config CONFIG
+                        Path to the model configuration file (model.yaml)
+```
+
+To run the script, you need to provide the
+
+* video using the `-v` flag
+* `model.pt` file using the `-m` flag
+* `model.yaml` file using the `-c` flag
+
+Example
+```bash
+python demo.py -v="demo/garbage_demo_rome.mp4" -m="demo/model.pt" -c="demo/model.yaml"
+```
