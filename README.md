@@ -49,6 +49,8 @@ options:
                         Path to the model checkpoint file (model.pt)
   -c CONFIG, --config CONFIG
                         Path to the model configuration file (model.yaml)
+  -t THRESHOLD, --threshold THRESHOLD
+                        The confidence threshold for the model to predict a garbage bounding box. Default (0.1).                  
 ```
 
 To run the script, you need to provide the

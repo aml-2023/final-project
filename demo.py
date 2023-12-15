@@ -8,9 +8,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Do Object Detection in a Video for Garbage using YOLO.")
 
     # Add command-line arguments
-    parser.add_argument("-v", "--video", help="Path to the video file", required=True)
-    parser.add_argument("-m", "--model", help="Path to the model checkpoint file (model.pt)", required=True)
-    parser.add_argument("-c", "--config", help="Path to the model configuration file (model.yaml)", required=True)
+    parser.add_argument("-v", "--video", help="Path to the video file", required=True, type=str)
+    parser.add_argument("-m", "--model", help="Path to the model checkpoint file (model.pt)", required=True, type=str)
+    parser.add_argument("-c", "--config", help="Path to the model configuration file (model.yaml)", required=True, type=str)
+    parser.add_argument("-t", "--threshold", help="The confidence threshold for the model to predict a garbage bounding box. Default (0.1).", default=0.1, type=float)
 
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -24,4 +25,4 @@ if __name__ == '__main__':
     model.model = det
 
     # track the video
-    model.track(args.video, show=True)
+    model.track(args.video, show=True, conf=args.threshold)
