@@ -1,8 +1,18 @@
 # Final Project
+This repository contains code and files for the final project of Advanced Machine Learning 2023/2024 at 
+Sapienza University. The project is about fine tuning state of the art object detection models YOLO and DETR
+to detect garbage in images.
+
+The repository is organised as follows:
+
+* [`yolo`](yolo): contains everything related to training, evaluating, searching for hyperparameters, running inference,
+    of the YOLO model.
+* [`detr`](detr): contains everything related to training, evaluating, searching for hyperparameters, running inference,
+    using the DETR model.
 
 # Data
-To fetch the garbage data, run the `fetch-data.sh` bash script. The data will be
-stored in a `data` directory.
+For any of the models, it is import to first fetch the garbage data. You can achieve this by running the `fetch-data.sh` 
+bash script. The data by default will be stored in a `data` directory.
 
 Script options.
 ```
@@ -28,38 +38,4 @@ The final folder will have the following structure:
 |   |-- train
 |   |-- test
 |   |-- val
-```
-
-# Demo
-To run the demo, you can use the `demo.py` script. The script will load a video file and YOLO model
-and to live tracking of the garbage on the video.
-
-```
-python demo.py --help
-
-usage: demo.py [-h] -v VIDEO -m MODEL -c CONFIG
-
-Do Object Detection in a Video for Garbage using YOLO.
-
-options:
-  -h, --help            show this help message and exit
-  -v VIDEO, --video VIDEO
-                        Path to the video file
-  -m MODEL, --model MODEL
-                        Path to the model checkpoint file (model.pt)
-  -c CONFIG, --config CONFIG
-                        Path to the model configuration file (model.yaml)
-  -t THRESHOLD, --threshold THRESHOLD
-                        The confidence threshold for the model to predict a garbage bounding box. Default (0.1).                  
-```
-
-To run the script, you need to provide the
-
-* video using the `-v` flag
-* `model.pt` file using the `-m` flag
-* `model.yaml` file using the `-c` flag
-
-Example
-```bash
-python demo.py -v="demo/garbage_demo_rome.mp4" -m="demo/model.pt" -c="demo/model.yaml"
 ```
