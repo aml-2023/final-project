@@ -161,3 +161,6 @@ cython_debug/
 
 ###### Our Exclusions #######
 data/
+*/train/*
+*/test/*
+*/valid/*
