@@ -7,6 +7,7 @@ TODO explain these files.
 * `train.ipynb`: notebook for training YOLOv8 model.
 * `metrics.ipynb`: notebook for extracting metrics from a trained YOLOv8 model
 * `hyperparameter_search.ipynb`: notebook for searching for hyperparameters for the YOLOv8 model.
+* `sam.ipynb`: notebook for zero-shot segmentation of garbage using the predicted YOLO bounding boxes and SAM. 
 * `demo.py`: script that runs inference on a video file using a YOLOv8 model.
 * `model.yaml`: file defining the YOLOv8 model structure we will use. This is important for inference
     since by default a fresh YOLO model predicts 80 classes and we just want 1.
