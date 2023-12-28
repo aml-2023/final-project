@@ -1,8 +1,18 @@
 # Final Project
+This repository contains code and files for the final project of Advanced Machine Learning 2023/2024 at 
+Sapienza University. The project is about fine tuning state of the art object detection models YOLO and DETR
+to detect garbage in images.
+
+The repository is organised as follows:
+
+* [`yolo`](yolo): contains everything related to training, evaluating, searching for hyperparameters, running inference,
+    of the YOLO model.
+* [`detr`](detr): contains everything related to training, evaluating, searching for hyperparameters, running inference,
+    using the DETR model.
 
 # Data
-To fetch the garbage data, run the `fetch-data.sh` bash script. The data will be
-stored in a `data` directory.
+For any of the models, it is import to first fetch the garbage data. You can achieve this by running the `fetch-data.sh` 
+bash script. The data by default will be stored in a `data` directory.
 
 Script options.
 ```
