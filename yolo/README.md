@@ -1,16 +1,18 @@
 # YOLO
 This directory contains the code and files related to the YOLOv8 model. You will find files for training
-the YOLOv8n model, conducting hyperparameter search, generating metrics from a fine tuned YOLOv8, as well
+the YOLOv8n model and the YOLOv7-tiny model, conducting hyperparameter search, generating metrics from a fine-tuned YOLOv8, as well
 as a runnable demo script.
 
-TODO explain these files.
 * `train.ipynb`: notebook for training YOLOv8 model.
 * `metrics.ipynb`: notebook for extracting metrics from a trained YOLOv8 model
 * `hyperparameter_search.ipynb`: notebook for searching for hyperparameters for the YOLOv8 model.
 * `sam.ipynb`: notebook for zero-shot segmentation of garbage using the predicted YOLO bounding boxes and SAM. 
 * `demo.py`: script that runs inference on a video file using a YOLOv8 model.
 * `model.yaml`: file defining the YOLOv8 model structure we will use. This is important for inference
-    since by default a fresh YOLO model predicts 80 classes and we just want 1.
+    since, by default, a fresh YOLO model predicts 80 classes, and we just want 1.
+* `sam.ipynb`: notebook for zero-shot segmentation with SAM.
+* `train_v7.ipynb`: notebook for training YOLOv7 model.
+
 
 ## Demo
 To run the demo, you can use the `demo.py` script. The script will load a video file and YOLO model
