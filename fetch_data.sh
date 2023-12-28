@@ -58,7 +58,7 @@ if [ "$dataset_type" == "coco" ]; then
   if [ "$dataset_percentage" == "full" ]; then
     url="https://universe.roboflow.com/ds/vunUxYLq9j?key=jDCfG8KbT0"
   elif [ "$dataset_percentage" == "subset" ]; then
-    url=""
+    url="https://aml-2023.s3.eu-north-1.amazonaws.com/final-project/coco_garbage_subset_10_percent.zip"
   fi
 elif [ "$dataset_type" == "yolo" ]; then
   echo "yolo dataset"
